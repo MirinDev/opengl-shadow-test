@@ -5,10 +5,25 @@ using namespace std;
 #include <GL/glut.h>
 
 #include <Shader.h>
+#include <Mesh.h>
 
 Shader* shader;
 ShaderPart* vsShader;
 ShaderPart* fsShader;
+
+Mesh* mesh;
+
+vector<float> vertices = 
+{
+    -0.5, -0.5, 0.0, 
+     0.5, -0.5, 0.0, 
+     0.0,  0.5, 0.0
+};
+
+vector<unsigned int> indices = 
+{
+    0, 1, 2
+};
 
 void init()
 {
@@ -21,6 +36,10 @@ void init()
 
     delete vsShader;
     delete fsShader;
+
+    shader->use();
+
+    mesh = new Mesh(vertices, indices);
 }
 
 void exit()
@@ -31,6 +50,8 @@ void exit()
 void render()
 {
     glClear(GL_COLOR_BUFFER_BIT);
+
+    mesh->render();
 
     glutSwapBuffers();
 }

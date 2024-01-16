@@ -2,7 +2,8 @@
 
 string read_file(string file_path)
 {
-    fstream file(file_path, ios::binary);
+    fstream file;
+    file.open(file_path);
 
     if (file)
     {
@@ -29,6 +30,21 @@ ShaderPart::ShaderPart(string file_path, GLuint type)
     id = glCreateShader(type);
     glShaderSource(id, 1, &shader_code, NULL);
     glCompileShader(id);
+
+    GLint success;
+    glGetShaderiv(id, GL_COMPILE_STATUS, &success);
+    if (!success)
+    {
+        GLint log_len = 0;
+        glGetShaderiv(id, GL_INFO_LOG_LENGTH, &log_len);
+
+        string log;
+        log.resize(log_len);
+
+        glGetShaderInfoLog(id, log_len, NULL, &log[0]);
+
+        cout << "error in file \"" << file_path << "\": " << endl << log << endl;
+    }
 }
 
 ShaderPart::~ShaderPart()

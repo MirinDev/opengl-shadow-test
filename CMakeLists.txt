@@ -1,6 +1,8 @@
 cmake_minimum_required(VERSION 3.6.0)
 project(opengl-shadow-test VERSION 0.0.0 LANGUAGES CXX)
 
+set(OpenGL_GL_PREFERENCE GLVND)
+
 file(GLOB source
     "main.cpp"
     "src/*.cpp"
@@ -16,4 +18,4 @@ find_package(GLEW REQUIRED)
 
 add_executable(${PROJECT_NAME} ${source})
 include_directories(${include_dirs})
-target_link_libraries(${PROJECT_NAME} OpenGL::OpenGL GLUT::GLUT GLEW::GLEW)
+target_link_libraries(${PROJECT_NAME} OpenGL::GL GLUT::GLUT GLEW::GLEW)
