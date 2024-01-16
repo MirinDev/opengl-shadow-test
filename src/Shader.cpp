@@ -4,14 +4,22 @@ Shader::Shader(vector<ShaderPart*> parts)
 {
     id = glCreateProgram();
 
-    for (int i = 0; i < parts.size(); i++)
-    {
-        ShaderPart* part = parts[i];
+    /* This should ideally be temporary and take the parts and then compile them into a specific function. */
 
-        glAttachShader(id, part->id);
-    }
+        if (!parts.empty())
+        {
 
-    glLinkProgram(id);
+            for (int i = 0; i < parts.size(); i++)
+            {
+                ShaderPart* part = parts[i];
+
+                glAttachShader(id, part->id);
+            }
+
+            glLinkProgram(id);
+
+        }
+
 }
 
 Shader::~Shader()
